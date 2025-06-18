@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Portfolio</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <header>
+            <p>Hi I'm</p>
+            <h1>Aiden</h1>
+            <p>and this is My Cool Website</p>
+        </header>
+
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <section id="about" class="about">
+            <h2>About Me</h2>
+            <p>My name is Aiden, I like to do design stuff. I am proficient in a host of platforms that include:</p>
+            <ul>
+                <li>Adobe Premier Pro</li>
+                <li>Adobe Photoshop</li>
+                <li>Adobe Illustrator</li>
+                <li>Adobe Lightroom</li>
+                <li>Adobe After Effects</li>
+                <li>DaVinci Resolve</li>
+                <li>Capcut</li>
+                <li>Inshot</li>
+            </ul>
+        </section>
+        <section id="carousel" style="padding: 4rem 2rem; text-align: center">
+            <h2>Project Showcase</h2>
+            <div class="carousel-container">
+                <button class="nav left" onclick="moveSlide(-1)">&#10094;</button>
+
+                <div class="carousel-track" id="carouselTrack">
+                    <img src="images/car1.jpg" class="carousel-image" />
+                    <img src="funny-dog-costume-excluded.jpg" class="carousel-image center" />
+                    <img src="funny-dog-costume-excluded.jpg" class="carousel-image" />
+                </div>
+
+                <button class="nav right" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+        </section>
+
+        <!-- <section id="projects" class="projects">
+            <h2>Projects</h2>
+            <div class="project">
+                <h3>Portfolio Website</h3>
+                <p>A responsive personal site made using pure HTML and CSS.</p>
+            </div>
+            <div class="project">
+                <h3>To-Do App</h3>
+                <p>A basic task manager built with HTML, CSS, and JavaScript (coming soon!).</p>
+            </div>
+        </section> -->
+
+        <section id="contact" class="contact">
+            <h2>Contact</h2>
+            <p><a href="mailto:aidenjrbusiness@gmail.com" target="_blank">Email: aidenjrbusiness@gmail.com</a></p>
+            <p><a href="https://www.instagram.com/aidendoesartstuff/" target="_blank">Instagram: @aidendoesartstuff</a></p>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Aiden. All rights reserved.</p>
+        </footer>
+    </body>
+</html>

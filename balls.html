@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smooth Carousel Fixed</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    section#carousel {
+      background: #fff;
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+
+    .carousel-container {
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-image {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      opacity: 0.4;
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+    }
+
+    .carousel-slide.active .carousel-image {
+      opacity: 1;
+      transform: scale(1.2);
+      width: 400px;
+      height: auto;
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #333;
+      color: white;
+      border: none;
+      font-size: 2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .nav.left {
+      left: 10px;
+    }
+
+    .nav.right {
+      right: 10px;
+    }
+
+    .nav:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <section id="carousel">
+    <h2>Funky Smooth Carousel</h2>
+    <div class="carousel-container">
+      <button class="nav left" onclick="moveSlide(-1)">&#10094;</button>
+
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide"><img src="images/car1.jpg" class="carousel-image" /></div>
+        <div class="carousel-slide"><img src="funny-dog-costume-excluded.jpg" class="carousel-image" /></div>
+        <div class="carousel-slide"><img src="images/car1.jpg" class="carousel-image" /></div>
+        <div class="carousel-slide"><img src="images/car1.jpg" class="carousel-image" /></div>
+        <div class="carousel-slide"><img src="images/car1.jpg" class="carousel-image" /></div>
+      </div>
+
+      <button class="nav right" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+  </section>
+
+  <script>
+    const track = document.getElementById('carouselTrack');
+    const slides = Array.from(track.children);
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function moveSlide(direction) {
+      currentIndex += direction;
+
+      // Clamp the index between 0 and last slide
+      if (currentIndex < 0) currentIndex = 0;
+      if (currentIndex >= slides.length) currentIndex = slides.length - 1;
+
+      updateCarousel();
+    }
+
+    window.addEventListener('load', updateCarousel);
+    window.addEventListener('resize', updateCarousel);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+nav {
+    background: #444;
+    color: white;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+section {
+    padding: 3rem 2rem;
+    max-width: 900px;
+    margin: auto;
+}
+
+.about,
+.projects,
+.contact {
+    margin-bottom: 2rem;
+}
+
+.project {
+    background: white;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-left: 5px solid #007bff;
+}
+
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.about ul {
+    padding-left: 1rem;
+}
+
+.contact p a {
+    color: unset;
+}
+
+.contact p a:hover {
+    text-decoration-style: dashed;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 900px;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center;
+  transition: transform 0.5s ease;
+}
+
+.carousel-image {
+  margin: 0 1rem;
+  width: 200px;
+  opacity: 0.4;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: scale(0.9);
+}
+
+.carousel-image.center {
+  width: 400px;
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.nav {
+  background-color: #333;
+  color: black;
+  border: none;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.nav:hover {
+  background-color: #555;
+}
