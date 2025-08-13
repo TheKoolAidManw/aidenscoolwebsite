@@ -868,14 +868,48 @@ async function loadPortfolio() {
     if (!container) return;
     
     try {
-        // Check if there are any images in the portfolio folder
-        // For now, we'll show a message encouraging users to add artwork
-        container.innerHTML = `
-            <div class="portfolio-message">
-                <h3>Portfolio Coming Soon</h3>
-                <p>I'm working on adding my latest projects to showcase here. Check back soon to see my work!</p>
-            </div>
-        `;
+        // Portfolio images - add your images here
+        const portfolioImages = [
+            {
+                src: 'portfolio/conspireback.jpeg',
+                title: 'Creative Design Project',
+                description: 'Adobe Creative Suite • Brand Design • Visual Identity',
+                category: 'Creative Design'
+            },
+            {
+                src: 'portfolio/001_0418-2.jpg',
+                title: 'Video Editing Project',
+                description: 'Adobe Premiere Pro • Color Grading • Motion Graphics',
+                category: 'Video Editing'
+            }
+        ];
+        
+        // Clear loading state
+        container.innerHTML = '';
+        
+        // Create portfolio items
+        portfolioImages.forEach((item, index) => {
+            const portfolioItem = document.createElement('div');
+            portfolioItem.className = 'portfolio-item';
+            
+            portfolioItem.innerHTML = `
+                <img src="${item.src}" alt="${item.title}" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                </div>
+            `;
+            
+            // Add click handler for analytics
+            portfolioItem.addEventListener('click', () => {
+                trackEvent('portfolio_click', {
+                    item_title: item.title,
+                    item_category: item.category
+                });
+            });
+            
+            container.appendChild(portfolioItem);
+        });
         
     } catch (error) {
         console.error('Error loading portfolio:', error);
