@@ -870,7 +870,6 @@ async function loadPortfolio() {
     try {
         // Portfolio images - add your images here
         const portfolioImages = [
-           
             {
                 src: 'portfolio/001_0418-2.jpg',
                 title: 'Personal Project',
@@ -888,7 +887,7 @@ async function loadPortfolio() {
             portfolioItem.className = 'portfolio-item';
             
             portfolioItem.innerHTML = `
-                <img src="${item.src}" alt="${item.title}" loading="lazy">
+                <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.style.display='none'; console.error('Failed to load image:', '${item.src}');">
                 <div class="portfolio-overlay">
                     <h3>${item.title}</h3>
                     <p>${item.description}</p>
