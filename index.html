@@ -456,6 +456,29 @@
         grid-column: 1 / -1;
         color: #dc3545;
     }
+    
+    .portfolio-placeholder {
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        border-radius: 16px;
+        padding: 3rem 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+    
+    .portfolio-placeholder h3 {
+        color: #343a40;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .portfolio-placeholder p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 1.1rem;
+    }
 
     /* Blog section */
     .blog-grid {
@@ -676,7 +699,6 @@
     <nav class="nav-menu" role="navigation" aria-label="Main navigation">
         <a href="index.html" class="active" aria-current="page">Home</a>
         <a href="contact.html">Contact</a>
-        <a href="blog.html">Blog</a>
     </nav>
 </div>
 
@@ -870,16 +892,29 @@ async function loadPortfolio() {
     try {
         // Portfolio images - add your images here
         const portfolioImages = [
-            {
-                src: 'https://i.imgur.com/0rEreGq.jpg', // Replace with your actual Imgur direct image URL
-                title: 'Personal Project',
-                description: 'Adobe Lightroom • Color Grading • Photo Editing',
-                category: 'Photo Editing'
-            }
+            // Add your portfolio images here when ready
+            // Example format:
+            // {
+            //     src: 'https://your-image-url.com/image.jpg',
+            //     title: 'Project Title',
+            //     description: 'Skills used • Technologies • Category',
+            //     category: 'Category Name'
+            // }
         ];
         
         // Clear loading state
         container.innerHTML = '';
+        
+        // Check if there are any portfolio images
+        if (portfolioImages.length === 0) {
+            container.innerHTML = `
+                <div class="portfolio-placeholder">
+                    <h3>Portfolio Coming Soon</h3>
+                    <p>I'm working on adding my latest projects. Check back soon to see my work!</p>
+                </div>
+            `;
+            return;
+        }
         
         // Create portfolio items
         portfolioImages.forEach((item, index) => {
