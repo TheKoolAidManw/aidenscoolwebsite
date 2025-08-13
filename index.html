@@ -281,6 +281,14 @@
             0 8px 25px rgba(0, 0, 0, 0.08),
             inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
 
     /* Content sections */
     .content {
@@ -809,6 +817,11 @@
             flex-direction: column;
             align-items: center;
         }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 </style>
 </head>
@@ -821,6 +834,8 @@
 <div class="nav-container">
     <nav class="nav-menu" role="navigation" aria-label="Main navigation">
         <a href="index.html" class="active" aria-current="page">Home</a>
+        <a href="#about-section">About</a>
+        <a href="#portfolio-section">Portfolio</a>
         <a href="contact.html">Contact</a>
     </nav>
 </div>
@@ -838,18 +853,22 @@
             <span class="tag">Creative Design</span>
             <span class="tag">Video & Photo Editing</span>
         </div>
+        <div class="hero-buttons">
+            <a href="#portfolio-section" class="btn-primary">View My Work</a>
+            <a href="contact.html" class="btn-secondary">Get a Quote</a>
+        </div>
     </div>
 </section>
 
 <!-- Main Content -->
 <main id="main-content">
     <div class="content">
-        <section class="section">
+        <section id="about-section" class="section">
             <h2>About Me</h2>
             <p>I blend technical expertise with artistic vision, creating seamless solutions that bridge the gap between hardware and creativity. From intricate computer repairs to stunning visual designs, I approach every project with precision and passion.</p>
         </section>
         
-        <section class="section">
+        <section id="skills-section" class="section">
             <h2>Skills & Expertise</h2>
             <div class="skills-grid">
                 <div class="skill-item">
@@ -898,7 +917,7 @@
             </div>
         </section>
 
-        <section class="section">
+        <section id="blog-section" class="section">
             <h2>Latest Blog Posts</h2>
             <p>Tech tips, industry insights, and helpful guides for computer users and creative professionals.</p>
             <div class="blog-grid">
@@ -918,6 +937,7 @@
             <div class="cta-buttons">
                 <a href="contact.html" class="btn-primary">Get a Quote</a>
                 <a href="#portfolio-section" class="btn-secondary">View My Work</a>
+                <a href="blog.html" class="btn-secondary">Read Blog</a>
             </div>
         </div>
     </div>
