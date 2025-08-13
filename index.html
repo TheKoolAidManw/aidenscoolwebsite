@@ -34,12 +34,31 @@
     
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+            linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
         background-attachment: fixed;
         color: #495057;
         line-height: 1.7;
         min-height: 100vh;
         overflow-x: hidden;
+        position: relative;
+    }
+    
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+        pointer-events: none;
+        z-index: -1;
     }
 
     /* Accessibility improvements */
@@ -102,10 +121,15 @@
     }
     
     .nav-menu {
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         border-radius: 50px;
         padding: 0.75rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
         display: flex;
         gap: 0.5rem;
@@ -158,9 +182,29 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        background: 
+            radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
         pointer-events: none;
+    }
+    
+    .hero::after {
+        content: '☸';
+        position: absolute;
+        top: 10%;
+        right: 10%;
+        font-size: 3rem;
+        color: rgba(255, 255, 255, 0.1);
+        animation: zen-float 12s ease-in-out infinite;
+        pointer-events: none;
+    }
+    
+    @keyframes zen-float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+        25% { transform: translateY(-15px) rotate(90deg); opacity: 0.2; }
+        50% { transform: translateY(-10px) rotate(180deg); opacity: 0.15; }
+        75% { transform: translateY(-20px) rotate(270deg); opacity: 0.25; }
     }
     
     .hero-content {
@@ -216,19 +260,26 @@
     }
     
     .tag {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         padding: 0.75rem 1.5rem;
         border-radius: 25px;
         font-size: 0.9rem;
         color: #495057;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
         transition: all 0.3s ease;
     }
     
     .tag:hover {
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.25);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
     /* Content sections */
@@ -239,12 +290,17 @@
     }
     
     .section {
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         border-radius: 24px;
         padding: 3rem;
         margin-bottom: 3rem;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
@@ -267,10 +323,28 @@
         background: linear-gradient(90deg, transparent, rgba(108, 117, 125, 0.2), transparent);
     }
     
+    .section::after {
+        content: '✦';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .section:hover::after {
+        opacity: 1;
+    }
+    
     .section:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.35);
         will-change: transform;
     }
     
@@ -297,11 +371,16 @@
     }
     
     .skill-item {
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         padding: 1.5rem;
         border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
@@ -323,9 +402,12 @@
     }
     
     .skill-item:hover {
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.3);
         transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 12px 30px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
     }
     
     .skill-item::after {
@@ -349,17 +431,25 @@
         position: relative;
         border-radius: 16px;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
         aspect-ratio: 16/9;
     }
     
     .portfolio-item:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.3);
     }
     
     .portfolio-item img {
@@ -481,20 +571,28 @@
     }
     
     .blog-card {
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         border-radius: 16px;
         padding: 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
     }
     
     .blog-card:hover {
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.3);
         transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 12px 30px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
     }
     
     .blog-card h3 {
@@ -560,11 +658,16 @@
     .cta-section {
         text-align: center;
         padding: 4rem 2rem;
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         border-radius: 24px;
         margin: 4rem 0;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
     }
     
     .cta-buttons {
@@ -587,39 +690,70 @@
     }
     
     .btn-primary {
-        background: linear-gradient(135deg, #6c757d, #495057);
+        background: rgba(108, 117, 125, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        background: linear-gradient(135deg, #495057, #343a40);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        background: rgba(108, 117, 125, 0.9);
     }
     
     .btn-secondary {
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         color: #495057;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
     }
     
     .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.3);
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
     }
 
     /* Footer */
     footer {
         text-align: center;
         padding: 3rem 2rem;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(30px);
-        border-top: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 -4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
         margin-top: 4rem;
+        position: relative;
+    }
+    
+    footer::before {
+        content: '☸';
+        position: absolute;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.2);
+        opacity: 0.5;
     }
     
     footer p {
