@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact - Aiden's Cool Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-    
     * {
         margin: 0;
         padding: 0;
@@ -15,7 +16,8 @@
     
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+        background-attachment: fixed;
         color: #495057;
         line-height: 1.7;
         min-height: 100vh;
@@ -117,6 +119,7 @@
     .logo-container {
         margin-bottom: 2rem;
         animation: float 6s ease-in-out infinite;
+        will-change: transform;
     }
     
     @keyframes float {
@@ -185,6 +188,7 @@
         transform: translateY(-8px);
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         background: rgba(255, 255, 255, 0.8);
+        will-change: transform;
     }
     
     .section h2 {
@@ -343,7 +347,7 @@
 <section class="hero">
     <div class="hero-content">
         <div class="logo-container">
-            <img src="logo.png" alt="Aiden's Logo">
+            <img src="images/logo.png" alt="Aiden's Logo" loading="lazy">
         </div>
         <h1>Let's Connect</h1>
         <p>Ready to bring your ideas to life? I'd love to hear about your project.</p>
