@@ -1,74 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>My Portfolio</title>
-        <link rel="stylesheet" href="style.css" />
-        <script src="main.js"></script>
-    </head>
-    <body>
-        <header>
-            <p>Hi I'm</p>
-            <h1>Aiden</h1>
-            <p>and this is My Cool Website</p>
-        </header>
-
-        <nav>
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
-
-        <section id="about" class="about">
-            <h2>About Me</h2>
-            <p>My name is Aiden, I like to do design stuff. I am proficient in a host of platforms that include:</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiden's Cool Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f8f9fa;
+            color: #333;
+        }
+        header {
+            background: #0078d4;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        nav {
+            background: #005a9e;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        section {
+            margin-bottom: 2rem;
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        h2 {
+            color: #0078d4;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li::before {
+            content: "✔️";
+            margin-right: 0.5rem;
+            color: #0078d4;
+        }
+        footer {
+            background: #005a9e;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Aiden's Cool Website</h1>
+        <p>Computer Repair • Creative Design • Video & Photo Editing</p>
+    </header>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <main>
+        <section id="services">
+            <h2>What I Do</h2>
+            <p>I work on and fix computers, and I love doing design work. From repairing hardware to creating beautiful visuals, I bring technical expertise and creative flair together.</p>
             <ul>
-                <li>Adobe Premier Pro</li>
+                <li>Computer troubleshooting & repairs</li>
+                <li>Custom graphic design</li>
+                <li>Video production & editing</li>
+                <li>Photo editing & enhancement</li>
+            </ul>
+        </section>
+        <section id="skills">
+            <h2>Platforms I Use</h2>
+            <ul>
+                <li>Adobe Premiere Pro</li>
                 <li>Adobe Photoshop</li>
                 <li>Adobe Illustrator</li>
                 <li>Adobe Lightroom</li>
                 <li>Adobe After Effects</li>
                 <li>DaVinci Resolve</li>
-                <li>Capcut</li>
-                <li>Inshot</li>
+                <li>CapCut</li>
+                <li>InShot</li>
             </ul>
         </section>
-        <section id="carousel" style="padding: 4rem 2rem; text-align: center">
-            <h2>Project Showcase</h2>
-            <div class="carousel-container">
-                <button class="nav left" onclick="moveSlide(-1)">&#10094;</button>
-
-                <div class="carousel-track" id="carouselTrack">
-                    <img src="images/car1.jpg" class="carousel-image" />
-                    <img src="funny-dog-costume-excluded.jpg" class="carousel-image center" />
-                    <img src="funny-dog-costume-excluded.jpg" class="carousel-image" />
-                </div>
-
-                <button class="nav right" onclick="moveSlide(1)">&#10095;</button>
-            </div>
+        <section id="contact">
+            <h2>Get in Touch</h2>
+            <p>Email me at: <a href="mailto:contact@aidenscoolwebsite.com">contact@aidenscoolwebsite.com</a></p>
         </section>
-
-        <!-- <section id="projects" class="projects">
-            <h2>Projects</h2>
-            <div class="project">
-                <h3>Portfolio Website</h3>
-                <p>A responsive personal site made using pure HTML and CSS.</p>
-            </div>
-            <div class="project">
-                <h3>To-Do App</h3>
-                <p>A basic task manager built with HTML, CSS, and JavaScript (coming soon!).</p>
-            </div>
-        </section> -->
-
-        <section id="contact" class="contact">
-            <h2>Contact</h2>
-            <p><a href="mailto:aidenjrbusiness@gmail.com" target="_blank">Email: aidenjrbusiness@gmail.com</a></p>
-            <p><a href="https://www.instagram.com/aidendoesartstuff/" target="_blank">Instagram: @aidendoesartstuff</a></p>
-        </section>
-
-        <footer>
-            <p>&copy; 2025 Aiden. All rights reserved.</p>
-        </footer>
-    </body>
+    </main>
+    <footer>
+        <p>© 2025 Aiden's Cool Website. All Rights Reserved.</p>
+    </footer>
+</body>
 </html>
