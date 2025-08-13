@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Me - Aiden's Cool Website</title>
+<title>Aiden's Cool Website</title>
 <style>
     body {
         font-family: 'Segoe UI', sans-serif;
@@ -67,7 +67,7 @@
         right: 0;
     }
     main {
-        max-width: 700px;
+        max-width: 900px;
         margin: 2rem auto;
         padding: 0 1rem;
     }
@@ -81,23 +81,13 @@
     h2 {
         margin-top: 0;
     }
-    form input, form textarea, form button {
-        width: 100%;
-        padding: 10px;
-        margin: 0.5rem 0;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        font-size: 1rem;
+    ul {
+        list-style: none;
+        padding: 0;
     }
-    form button {
-        background: #000;
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-    form button:hover {
-        background: #333;
+    ul li::before {
+        content: "✔️";
+        margin-right: 0.5rem;
     }
     footer {
         text-align: center;
@@ -127,19 +117,21 @@
 
 <main>
     <section>
-        <h2>Contact Me</h2>
-        <p>Fill out the form below and I’ll get back to you as soon as possible.</p>
-        <form action="https://formsubmit.co/contact@aidenscoolwebsite.com" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            
-            <!-- Hidden fields -->
-            <input type="hidden" name="_next" value="https://aidenscoolwebsite.com/thankyou.html">
-            <input type="hidden" name="_captcha" value="false">
-
-            <button type="submit">Send Message</button>
-        </form>
+        <h2>About Me</h2>
+        <p>I work on and fix computers, and I love doing design work. From hardware repairs to creative visual projects, I combine technical expertise with artistic skill.</p>
+    </section>
+    <section>
+        <h2>Skills</h2>
+        <ul>
+            <li>Adobe Premiere Pro</li>
+            <li>Adobe Photoshop</li>
+            <li>Adobe Illustrator</li>
+            <li>Adobe Lightroom</li>
+            <li>Adobe After Effects</li>
+            <li>DaVinci Resolve</li>
+            <li>CapCut</li>
+            <li>InShot</li>
+        </ul>
     </section>
 </main>
 
