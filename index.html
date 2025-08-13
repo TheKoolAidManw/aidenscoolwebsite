@@ -233,75 +233,6 @@
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
-    /* Scroll indicator */
-    .scroll-indicator {
-        position: absolute;
-        bottom: 1rem;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        animation: bounce 2s infinite;
-        z-index: 10;
-    }
-    
-    .scroll-arrow {
-        width: 40px;
-        height: 40px;
-        border: 2px solid rgba(108, 117, 125, 0.3);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1rem;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-    
-    .scroll-arrow:hover {
-        border-color: rgba(108, 117, 125, 0.6);
-        transform: scale(1.1);
-    }
-    
-    .arrow-down {
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-top: 8px solid #6c757d;
-        animation: pulse 2s infinite;
-    }
-    
-    .scroll-text {
-        color: #6c757d;
-        font-size: 0.9rem;
-        font-weight: 400;
-        margin: 0;
-    }
-    
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-            transform: translateX(-50%) translateY(0);
-        }
-        40% {
-            transform: translateX(-50%) translateY(-10px);
-        }
-        60% {
-            transform: translateX(-50%) translateY(-5px);
-        }
-    }
-    
-    @keyframes pulse {
-        0% {
-            opacity: 0.6;
-        }
-        50% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0.6;
-        }
-    }
-
     /* Content sections */
     .content {
         max-width: 1000px;
@@ -762,14 +693,6 @@
             <span class="tag">Creative Design</span>
             <span class="tag">Video & Photo Editing</span>
         </div>
-        
-        <!-- Scroll indicator -->
-        <div class="scroll-indicator">
-            <div class="scroll-arrow">
-                <span class="arrow-down"></span>
-            </div>
-            <p class="scroll-text">Scroll to explore</p>
-        </div>
     </div>
 </section>
 
@@ -988,19 +911,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Add scroll functionality to the arrow
-    const scrollArrow = document.querySelector('.scroll-arrow');
-    if (scrollArrow) {
-        scrollArrow.addEventListener('click', () => {
-            const content = document.querySelector('.content');
-            if (content) {
-                content.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    }
+
 });
 </script>
 
