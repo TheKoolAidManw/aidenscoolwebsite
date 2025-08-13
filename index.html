@@ -8,78 +8,78 @@
     body {
         font-family: 'Segoe UI', sans-serif;
         margin: 0;
-        background: #fff;
+        background: linear-gradient(135deg, #f0f0f0, #e6e6e6);
         color: #000;
+        transition: background 0.5s ease;
     }
-    header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
-        background: #000;
-        color: #fff;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-    }
-    header img {
-        height: 50px;
-    }
-    .menu-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-    }
-    .menu-btn div {
-        width: 6px;
-        height: 6px;
-        background: white;
-        border-radius: 50%;
-        margin: 3px;
-        display: inline-block;
-    }
+
+    /* Sidebar */
     .side-menu {
         position: fixed;
         top: 0;
-        right: -250px;
-        width: 250px;
+        left: -180px;
+        width: 180px;
         height: 100%;
-        background: #111;
-        color: white;
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.25);
         padding: 2rem 1rem;
-        transition: right 0.3s ease;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        box-shadow: -2px 0 10px rgba(0,0,0,0.4);
+        border-right: 1px solid rgba(0,0,0,0.1);
+        transition: left 0.3s ease, background 0.3s ease;
+        box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .side-menu:hover {
+        left: 0;
+        background: rgba(255, 255, 255, 0.4);
     }
     .side-menu a {
         display: block;
-        color: white;
+        color: black;
         text-decoration: none;
-        padding: 0.5rem 0;
-        font-size: 1.2rem;
-        border-bottom: 1px solid #333;
+        padding: 0.8rem;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        margin-bottom: 0.5rem;
+        transition: background 0.3s;
     }
     .side-menu a:hover {
-        color: #999;
+        background: rgba(0,0,0,0.05);
     }
-    .side-menu.open {
-        right: 0;
+
+    /* Header */
+    header {
+        text-align: center;
+        padding: 2rem 1rem;
     }
+    header img {
+        height: 60px;
+        display: block;
+        margin: auto;
+        margin-bottom: 1rem;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    /* Sections */
     main {
         max-width: 900px;
         margin: 2rem auto;
         padding: 0 1rem;
     }
     section {
-        background: #f5f5f5;
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(8px);
         padding: 1.5rem;
         border-radius: 20px;
         margin-bottom: 2rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
     }
-    h2 {
-        margin-top: 0;
+    section:hover {
+        transform: translateY(-3px);
     }
     ul {
         list-style: none;
@@ -89,31 +89,32 @@
         content: "✔️";
         margin-right: 0.5rem;
     }
+
+    /* Footer */
     footer {
         text-align: center;
         padding: 1rem;
-        background: #000;
-        color: white;
+        background: rgba(255,255,255,0.4);
+        backdrop-filter: blur(6px);
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
     }
 </style>
 </head>
 <body>
 
-<header>
-    <img src="logo.png" alt="Aiden's Logo">
-    <button class="menu-btn" onclick="toggleMenu()">
-        <div></div><div></div><div></div>
-        <div></div><div></div><div></div>
-        <div></div><div></div><div></div>
-    </button>
-</header>
-
-<div class="side-menu" id="sideMenu">
+<!-- Hover Sidebar -->
+<div class="side-menu">
     <a href="index.html">Home</a>
     <a href="contact.html">Contact</a>
 </div>
+
+<header>
+    <img src="logo.png" alt="Aiden's Logo">
+    <h1>Aiden's Cool Website</h1>
+    <p>Computer Repair • Creative Design • Video & Photo Editing</p>
+</header>
 
 <main>
     <section>
@@ -138,12 +139,6 @@
 <footer>
     <p>© 2025 Aiden's Cool Website</p>
 </footer>
-
-<script>
-function toggleMenu() {
-    document.getElementById("sideMenu").classList.toggle("open");
-}
-</script>
 
 </body>
 </html>
