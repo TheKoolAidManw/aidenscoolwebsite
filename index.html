@@ -233,6 +233,74 @@
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
+    /* Scroll indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        animation: bounce 2s infinite;
+    }
+    
+    .scroll-arrow {
+        width: 40px;
+        height: 40px;
+        border: 2px solid rgba(108, 117, 125, 0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .scroll-arrow:hover {
+        border-color: rgba(108, 117, 125, 0.6);
+        transform: scale(1.1);
+    }
+    
+    .arrow-down {
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 8px solid #6c757d;
+        animation: pulse 2s infinite;
+    }
+    
+    .scroll-text {
+        color: #6c757d;
+        font-size: 0.9rem;
+        font-weight: 400;
+        margin: 0;
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        40% {
+            transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+            transform: translateX(-50%) translateY(-5px);
+        }
+    }
+    
+    @keyframes pulse {
+        0% {
+            opacity: 0.6;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0.6;
+        }
+    }
+
     /* Content sections */
     .content {
         max-width: 1000px;
@@ -387,6 +455,62 @@
     .portfolio-item:hover img {
         transform: scale(1.1);
     }
+    
+    .portfolio-loading {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #6c757d;
+        grid-column: 1 / -1;
+    }
+    
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(173, 181, 189, 0.3);
+        border-top: 3px solid #6c757d;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .portfolio-message {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 16px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        text-align: center;
+        grid-column: 1 / -1;
+        margin-top: 2rem;
+    }
+    
+    .portfolio-message p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 1rem;
+    }
+    
+    .portfolio-message code {
+        background: rgba(108, 117, 125, 0.1);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: 'Monaco', 'Menlo', monospace;
+        font-size: 0.9rem;
+    }
+    
+    .portfolio-error {
+        background: rgba(220, 53, 69, 0.1);
+        border: 1px solid rgba(220, 53, 69, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        grid-column: 1 / -1;
+        color: #dc3545;
+    }
 
     /* Blog section */
     .blog-grid {
@@ -440,6 +564,34 @@
     
     .read-more:hover {
         border-bottom-color: #495057;
+    }
+    
+    .blog-placeholder {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 16px;
+        padding: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+    
+    .blog-placeholder:hover {
+        background: rgba(255, 255, 255, 0.8);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .blog-placeholder h3 {
+        color: #343a40;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .blog-placeholder p {
+        color: #6c757d;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
     }
 
     /* Statistics section */
@@ -626,6 +778,14 @@
             <span class="tag">Creative Design</span>
             <span class="tag">Video & Photo Editing</span>
         </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <span class="arrow-down"></span>
+            </div>
+            <p class="scroll-text">Scroll to explore</p>
+        </div>
     </div>
 </section>
 
@@ -678,27 +838,10 @@
         <section class="section">
             <h2>Portfolio</h2>
             <p>Explore some of my recent work across computer repair, video editing, and creative design projects.</p>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/400x225/6c757d/ffffff?text=Video+Project" alt="Commercial video editing project" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <h3>Commercial Video Edit</h3>
-                        <p>Adobe Premiere Pro • Color Grading • Motion Graphics</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/400x225/495057/ffffff?text=Design+Project" alt="Logo design project" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <h3>Brand Identity Design</h3>
-                        <p>Adobe Illustrator • Logo Design • Brand Guidelines</p>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/400x225/343a40/ffffff?text=Repair+Project" alt="Computer repair project" loading="lazy">
-                    <div class="portfolio-overlay">
-                        <h3>Hardware Repair</h3>
-                        <p>Diagnostics • Component Replacement • Performance Optimization</p>
-                    </div>
+            <div id="portfolio-container" class="portfolio-grid">
+                <div class="portfolio-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading portfolio...</p>
                 </div>
             </div>
         </section>
@@ -707,24 +850,11 @@
             <h2>Latest Blog Posts</h2>
             <p>Tech tips, industry insights, and helpful guides for computer users and creative professionals.</p>
             <div class="blog-grid">
-                <article class="blog-card">
-                    <h3>5 Signs Your Computer Needs Repair</h3>
-                    <div class="date">March 15, 2025</div>
-                    <p>Learn to identify common computer problems before they become serious issues. From slow performance to strange noises, here's what to watch out for...</p>
-                    <a href="blog/computer-repair-signs.html" class="read-more">Read More</a>
-                </article>
-                <article class="blog-card">
-                    <h3>Video Editing Tips for Beginners</h3>
-                    <div class="date">March 10, 2025</div>
-                    <p>Essential techniques and workflows to get you started with professional video editing. Perfect for content creators and aspiring editors...</p>
-                    <a href="blog/video-editing-tips.html" class="read-more">Read More</a>
-                </article>
-                <article class="blog-card">
-                    <h3>Optimizing Your Workflow in Adobe Creative Suite</h3>
-                    <div class="date">March 5, 2025</div>
-                    <p>Streamline your creative process with these time-saving tips and tricks for Adobe Photoshop, Illustrator, and Premiere Pro...</p>
-                    <a href="blog/adobe-workflow-tips.html" class="read-more">Read More</a>
-                </article>
+                <div class="blog-placeholder">
+                    <h3>Coming Soon</h3>
+                    <p>I'm working on some great content for you. Check back soon for helpful tips and insights!</p>
+                    <a href="blog.html" class="read-more">Visit Blog</a>
+                </div>
             </div>
         </section>
 
@@ -836,6 +966,118 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Portfolio data - customize these for your projects
+const portfolioData = [
+    {
+        title: "Video Editing Project",
+        description: "Adobe Premiere Pro • Color Grading • Motion Graphics",
+        category: "Video Editing"
+    },
+    {
+        title: "Brand Identity Design",
+        description: "Adobe Illustrator • Logo Design • Brand Guidelines",
+        category: "Creative Design"
+    },
+    {
+        title: "Hardware Repair",
+        description: "Diagnostics • Component Replacement • Performance Optimization",
+        category: "Computer Repair"
+    },
+    {
+        title: "Photo Editing",
+        description: "Adobe Photoshop • Lightroom • Color Correction",
+        category: "Creative Design"
+    },
+    {
+        title: "Motion Graphics",
+        description: "Adobe After Effects • Animation • Visual Effects",
+        category: "Video Editing"
+    },
+    {
+        title: "System Optimization",
+        description: "Performance Tuning • Software Installation • Maintenance",
+        category: "Computer Repair"
+    }
+];
+
+// Function to shuffle array
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// Function to load portfolio images
+async function loadPortfolio() {
+    const container = document.getElementById('portfolio-container');
+    if (!container) return;
+    
+    try {
+        // Simulate loading portfolio images from the portfolio folder
+        // In a real implementation, you would fetch this from your server
+        const portfolioImages = [
+            'portfolio/sample-1.jpg',
+            'portfolio/sample-2.jpg',
+            'portfolio/sample-3.jpg'
+        ];
+        
+        // For now, we'll use placeholder images until you add real artwork
+        const placeholderImages = [
+            'https://via.placeholder.com/400x225/6c757d/ffffff?text=Your+Artwork+1',
+            'https://via.placeholder.com/400x225/495057/ffffff?text=Your+Artwork+2',
+            'https://via.placeholder.com/400x225/343a40/ffffff?text=Your+Artwork+3'
+        ];
+        
+        // Shuffle the portfolio data
+        const shuffledData = shuffleArray(portfolioData);
+        
+        // Clear loading state
+        container.innerHTML = '';
+        
+        // Create portfolio items
+        placeholderImages.forEach((imageSrc, index) => {
+            const data = shuffledData[index % shuffledData.length];
+            const item = document.createElement('div');
+            item.className = 'portfolio-item';
+            
+            item.innerHTML = `
+                <img src="${imageSrc}" alt="${data.title}" loading="lazy">
+                <div class="portfolio-overlay">
+                    <h3>${data.title}</h3>
+                    <p>${data.description}</p>
+                </div>
+            `;
+            
+            // Add click handler for analytics
+            item.addEventListener('click', () => {
+                trackEvent('portfolio_click', {
+                    item_title: data.title,
+                    item_category: data.category
+                });
+            });
+            
+            container.appendChild(item);
+        });
+        
+        // Add a message about adding artwork
+        if (placeholderImages.length === 3) {
+            const message = document.createElement('div');
+            message.className = 'portfolio-message';
+            message.innerHTML = `
+                <p>💡 <strong>Add Your Artwork:</strong> Drop your images in the <code>portfolio/</code> folder to see them here!</p>
+            `;
+            container.appendChild(message);
+        }
+        
+    } catch (error) {
+        console.error('Error loading portfolio:', error);
+        container.innerHTML = '<div class="portfolio-error"><p>Unable to load portfolio. Please try again later.</p></div>';
+    }
+}
+
 // Track analytics events
 function trackEvent(eventName, eventData = {}) {
     if (typeof gtag !== 'undefined') {
@@ -845,6 +1087,10 @@ function trackEvent(eventName, eventData = {}) {
 
 // Track page views and interactions
 document.addEventListener('DOMContentLoaded', () => {
+    // Load portfolio
+    loadPortfolio();
+    
+    // Track page view
     trackEvent('page_view', {
         page_title: document.title,
         page_location: window.location.href
@@ -860,15 +1106,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Track portfolio item clicks
-    document.querySelectorAll('.portfolio-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const title = item.querySelector('h3')?.textContent || 'Portfolio Item';
-            trackEvent('portfolio_click', {
-                item_title: title
-            });
+    // Add scroll functionality to the arrow
+    const scrollArrow = document.querySelector('.scroll-arrow');
+    if (scrollArrow) {
+        scrollArrow.addEventListener('click', () => {
+            const content = document.querySelector('.content');
+            if (content) {
+                content.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
-    });
+    }
 });
 </script>
 
