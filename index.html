@@ -939,7 +939,7 @@
         <section id="blog-section" class="section">
             <h2>Latest Blog Posts</h2>
             <p>Tech tips, industry insights, and helpful guides for computer users and creative professionals.</p>
-            <div class="blog-grid">
+            <div class="blog-grid" id="homepage-blog-grid">
                 <div class="blog-placeholder">
                     <h3>Coming Soon</h3>
                     <p>I'm working on some great content for you. Check back soon for helpful tips and insights!</p>
@@ -1113,10 +1113,69 @@ function trackEvent(eventName, eventData = {}) {
     }
 }
 
+// Secure storage for blog posts (same as admin page)
+class SecureStorage {
+    constructor() {
+        this.storageKey = 'encrypted_blog_posts';
+    }
+
+    encrypt(data) {
+        return btoa(JSON.stringify(data));
+    }
+
+    decrypt(encryptedData) {
+        try {
+            return JSON.parse(atob(encryptedData));
+        } catch (e) {
+            return [];
+        }
+    }
+
+    getPosts() {
+        const encrypted = localStorage.getItem(this.storageKey);
+        return encrypted ? this.decrypt(encrypted) : [];
+    }
+}
+
+const secureStorage = new SecureStorage();
+
+// Load blog posts for homepage
+function loadHomepageBlog() {
+    const blogPosts = secureStorage.getPosts();
+    const container = document.getElementById('homepage-blog-grid');
+    
+    if (!container || blogPosts.length === 0) return;
+    
+    // Show only the latest 3 posts
+    const latestPosts = blogPosts.slice(0, 3);
+    
+    container.innerHTML = '';
+    
+    latestPosts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.className = 'blog-card';
+        
+        const wordCount = post.content ? post.content.split(' ').length : 0;
+        const readTime = Math.ceil(wordCount / 200);
+        
+        postElement.innerHTML = `
+            <h3>${post.title}</h3>
+            <div class="date">${post.date} • ${readTime} min read</div>
+            <p>${post.description}</p>
+            <a href="blog.html" class="read-more">Read More</a>
+        `;
+        
+        container.appendChild(postElement);
+    });
+}
+
 // Track page views and interactions
 document.addEventListener('DOMContentLoaded', () => {
     // Load portfolio
     loadPortfolio();
+    
+    // Load blog posts
+    loadHomepageBlog();
     
     // Track page view
     trackEvent('page_view', {

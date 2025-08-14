@@ -385,6 +385,79 @@
         font-size: 0.9rem;
     }
 
+    /* Post Modal */
+    .post-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .modal-content {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem;
+        max-width: 800px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .close {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s ease;
+    }
+
+    .close:hover {
+        color: #343a40;
+    }
+
+    .post-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .post-meta span {
+        background: rgba(108, 117, 125, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: #495057;
+    }
+
+    .post-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+
+    .post-content h1, .post-content h2, .post-content h3 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #343a40;
+    }
+
+    .post-content p {
+        margin-bottom: 1.5rem;
+    }
+
     /* Responsive design */
     @media (max-width: 768px) {
         .hero h1 {
@@ -468,69 +541,32 @@
 </footer>
 
 <script>
-// Blog data - Easy to update by modifying this object
-const blogPosts = [
-    {
-        id: 1,
-        title: "5 Signs Your Computer Needs Repair",
-        excerpt: "Learn to identify common computer problems before they become serious issues. From slow performance to strange noises, here's what to watch out for and when to seek professional help.",
-        date: "March 15, 2025",
-        category: "Computer Repair",
-        readTime: "5 min read",
-        image: "https://via.placeholder.com/400x225/6c757d/ffffff?text=Computer+Repair",
-        url: "blog/computer-repair-signs.html"
-    },
-    {
-        id: 2,
-        title: "Video Editing Tips for Beginners",
-        excerpt: "Essential techniques and workflows to get you started with professional video editing. Perfect for content creators and aspiring editors looking to improve their skills.",
-        date: "March 10, 2025",
-        category: "Video Editing",
-        readTime: "8 min read",
-        image: "https://via.placeholder.com/400x225/495057/ffffff?text=Video+Editing",
-        url: "blog/video-editing-tips.html"
-    },
-    {
-        id: 3,
-        title: "Optimizing Your Workflow in Adobe Creative Suite",
-        excerpt: "Streamline your creative process with these time-saving tips and tricks for Adobe Photoshop, Illustrator, and Premiere Pro. Boost productivity and create better work faster.",
-        date: "March 5, 2025",
-        category: "Creative Design",
-        readTime: "10 min read",
-        image: "https://via.placeholder.com/400x225/343a40/ffffff?text=Adobe+Suite",
-        url: "blog/adobe-workflow-tips.html"
-    },
-    {
-        id: 4,
-        title: "The Future of Computer Hardware: What to Expect in 2025",
-        excerpt: "Explore upcoming trends in computer hardware, from faster processors to more efficient cooling solutions. Stay ahead of the curve with these insights.",
-        date: "March 1, 2025",
-        category: "Tech Trends",
-        readTime: "6 min read",
-        image: "https://via.placeholder.com/400x225/6c757d/ffffff?text=Hardware+Trends",
-        url: "blog/future-hardware-2025.html"
-    },
-    {
-        id: 5,
-        title: "Color Grading Techniques for Professional Videos",
-        excerpt: "Master the art of color grading with these professional techniques. Learn how to create cinematic looks and enhance your video projects with proper color correction.",
-        date: "February 25, 2025",
-        category: "Video Editing",
-        readTime: "12 min read",
-        image: "https://via.placeholder.com/400x225/495057/ffffff?text=Color+Grading",
-        url: "blog/color-grading-techniques.html"
-    },
-    {
-        id: 6,
-        title: "Building a Brand Identity: Logo Design Principles",
-        excerpt: "Discover the fundamental principles of effective logo design and brand identity creation. Learn how to create memorable, scalable logos that represent your brand perfectly.",
-        date: "February 20, 2025",
-        category: "Creative Design",
-        readTime: "7 min read",
-        image: "https://via.placeholder.com/400x225/343a40/ffffff?text=Logo+Design",
-        url: "blog/logo-design-principles.html"
+// Secure storage for blog posts (same as admin page)
+class SecureStorage {
+    constructor() {
+        this.storageKey = 'encrypted_blog_posts';
     }
-];
+
+    encrypt(data) {
+        return btoa(JSON.stringify(data));
+    }
+
+    decrypt(encryptedData) {
+        try {
+            return JSON.parse(atob(encryptedData));
+        } catch (e) {
+            return [];
+        }
+    }
+
+    getPosts() {
+        const encrypted = localStorage.getItem(this.storageKey);
+        return encrypted ? this.decrypt(encrypted) : [];
+    }
+}
+
+const secureStorage = new SecureStorage();
+let blogPosts = secureStorage.getPosts();
 
 // Function to render blog posts
 function renderBlogPosts() {
@@ -541,6 +577,17 @@ function renderBlogPosts() {
     // Clear loading state
     container.innerHTML = '';
     
+    // Check if there are any posts
+    if (blogPosts.length === 0) {
+        container.innerHTML = `
+            <div class="blog-placeholder">
+                <h3>Coming Soon</h3>
+                <p>I'm working on some great content for you. Check back soon for helpful tips and insights!</p>
+            </div>
+        `;
+        return;
+    }
+    
     // Sort posts by date (newest first)
     const sortedPosts = blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
     
@@ -550,15 +597,19 @@ function renderBlogPosts() {
         postElement.className = 'blog-card';
         postElement.setAttribute('data-post-id', post.id);
         
+        // Calculate read time based on content length
+        const wordCount = post.content ? post.content.split(' ').length : 0;
+        const readTime = Math.ceil(wordCount / 200); // Average reading speed
+        
         postElement.innerHTML = `
-            <div class="category">${post.category}</div>
+            <div class="category">${post.category || 'General'}</div>
             <h3>${post.title}</h3>
             <div class="date">
                 <span>📅</span>
-                ${post.date} • ${post.readTime}
+                ${post.date} • ${readTime} min read
             </div>
-            <p>${post.excerpt}</p>
-            <a href="${post.url}" class="read-more">Read More</a>
+            <p>${post.description}</p>
+            <a href="#" class="read-more" onclick="showFullPost(${post.id})">Read More</a>
         `;
         
         // Add click handler for analytics
@@ -571,6 +622,39 @@ function renderBlogPosts() {
         
         container.appendChild(postElement);
     });
+}
+
+// Function to show full post content
+function showFullPost(postId) {
+    const post = blogPosts.find(p => p.id === postId);
+    if (post) {
+        // Create a modal or redirect to a full post view
+        const modal = document.createElement('div');
+        modal.className = 'post-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>${post.title}</h2>
+                <div class="post-meta">
+                    <span class="category">${post.category || 'General'}</span>
+                    <span class="date">${post.date}</span>
+                    <span class="author">By ${post.author}</span>
+                </div>
+                <div class="post-content">
+                    ${post.content.replace(/\n/g, '<br>')}
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close modal functionality
+        const closeBtn = modal.querySelector('.close');
+        closeBtn.onclick = () => modal.remove();
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.remove();
+        };
+    }
 }
 
 // Intersection Observer for scroll animations
