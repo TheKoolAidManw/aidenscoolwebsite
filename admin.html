@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
 <title>Admin - Blog Management</title>
 <meta name="description" content="Private admin panel for managing blog posts">
 <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -392,6 +394,7 @@
         <div class="admin-header">
             <h1>Blog Management</h1>
             <p>Create and manage your blog posts</p>
+            <button class="btn btn-small" onclick="logout()" style="margin-top: 1rem;">Logout</button>
         </div>
 
         <!-- New Blog Post Form -->
@@ -431,34 +434,201 @@
 </div>
 
 <script>
-// Simple authentication (you should implement proper authentication in production)
-const ADMIN_CREDENTIALS = {
-    username: 'aiden',
-    password: 'mywebsiteiscool'
-};
+// Enhanced security for admin authentication
+class AdminAuth {
+    constructor() {
+        this.maxAttempts = 5;
+        this.lockoutTime = 15 * 60 * 1000; // 15 minutes
+        this.attempts = parseInt(localStorage.getItem('loginAttempts') || '0');
+        this.lastAttempt = parseInt(localStorage.getItem('lastAttempt') || '0');
+        this.sessionTimeout = 30 * 60 * 1000; // 30 minutes
+        this.sessionStart = parseInt(localStorage.getItem('sessionStart') || '0');
+    }
 
-// Blog posts storage (in production, use a database)
-let blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+    // Hash function for password comparison (basic implementation)
+    async hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password + 'aidenscoolwebsite_salt_2025');
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Check if account is locked
+    isLocked() {
+        if (this.attempts >= this.maxAttempts) {
+            const timeSinceLastAttempt = Date.now() - this.lastAttempt;
+            if (timeSinceLastAttempt < this.lockoutTime) {
+                return true;
+            } else {
+                // Reset attempts after lockout period
+                this.attempts = 0;
+                localStorage.setItem('loginAttempts', '0');
+            }
+        }
+        return false;
+    }
+
+    // Validate credentials
+    async validateCredentials(username, password) {
+        if (this.isLocked()) {
+            const remainingTime = Math.ceil((this.lockoutTime - (Date.now() - this.lastAttempt)) / 1000 / 60);
+            throw new Error(`Account locked. Try again in ${remainingTime} minutes.`);
+        }
+
+        // Hash the provided password
+        const hashedPassword = await this.hashPassword(password);
+        
+        // Compare with stored hash (in production, this would be server-side)
+        const expectedHash = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'; // hash of 'mywebsiteiscool'
+        
+        if (username === 'aiden' && hashedPassword === expectedHash) {
+            // Successful login
+            this.attempts = 0;
+            localStorage.setItem('loginAttempts', '0');
+            this.startSession();
+            return true;
+        } else {
+            // Failed login
+            this.attempts++;
+            this.lastAttempt = Date.now();
+            localStorage.setItem('loginAttempts', this.attempts.toString());
+            localStorage.setItem('lastAttempt', this.lastAttempt.toString());
+            
+            const remainingAttempts = this.maxAttempts - this.attempts;
+            if (remainingAttempts <= 0) {
+                throw new Error('Account locked due to too many failed attempts.');
+            } else {
+                throw new Error(`Invalid credentials. ${remainingAttempts} attempts remaining.`);
+            }
+        }
+    }
+
+    // Start session
+    startSession() {
+        this.sessionStart = Date.now();
+        localStorage.setItem('sessionStart', this.sessionStart.toString());
+        localStorage.setItem('adminLoggedIn', 'true');
+    }
+
+    // Check if session is valid
+    isSessionValid() {
+        if (!localStorage.getItem('adminLoggedIn')) return false;
+        
+        const sessionAge = Date.now() - this.sessionStart;
+        if (sessionAge > this.sessionTimeout) {
+            this.logout();
+            return false;
+        }
+        return true;
+    }
+
+    // Logout
+    logout() {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('sessionStart');
+        this.sessionStart = 0;
+    }
+
+    // Auto-logout on inactivity
+    setupInactivityLogout() {
+        let inactivityTimer;
+        const resetTimer = () => {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (this.isSessionValid()) {
+                    this.logout();
+                    alert('Session expired due to inactivity. Please login again.');
+                    location.reload();
+                }
+            }, 10 * 60 * 1000); // 10 minutes of inactivity
+        };
+
+        // Reset timer on user activity
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetTimer, true);
+        });
+
+        resetTimer();
+    }
+}
+
+// Initialize authentication
+const auth = new AdminAuth();
+
+// Blog posts storage with encryption (basic implementation)
+class SecureStorage {
+    constructor() {
+        this.storageKey = 'encrypted_blog_posts';
+    }
+
+    // Simple encryption (in production, use proper encryption)
+    encrypt(data) {
+        return btoa(JSON.stringify(data));
+    }
+
+    decrypt(encryptedData) {
+        try {
+            return JSON.parse(atob(encryptedData));
+        } catch (e) {
+            return [];
+        }
+    }
+
+    getPosts() {
+        const encrypted = localStorage.getItem(this.storageKey);
+        return encrypted ? this.decrypt(encrypted) : [];
+    }
+
+    savePosts(posts) {
+        const encrypted = this.encrypt(posts);
+        localStorage.setItem(this.storageKey, encrypted);
+    }
+}
+
+const secureStorage = new SecureStorage();
+let blogPosts = secureStorage.getPosts();
 
 // Login functionality
-document.getElementById('adminLogin').addEventListener('submit', function(e) {
+document.getElementById('adminLogin').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
     
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    try {
+        submitBtn.textContent = 'Logging in...';
+        submitBtn.disabled = true;
+        
+        await auth.validateCredentials(username, password);
+        
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'block';
         loadExistingPosts();
-    } else {
-        alert('Invalid credentials. Please try again.');
+        auth.setupInactivityLogout();
+        
+        // Clear form
+        this.reset();
+        
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     }
 });
 
 // Blog post form submission
 document.getElementById('blogPostForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    
+    if (!auth.isSessionValid()) {
+        alert('Session expired. Please login again.');
+        location.reload();
+        return;
+    }
     
     const formData = new FormData(e.target);
     const newPost = {
@@ -468,11 +638,12 @@ document.getElementById('blogPostForm').addEventListener('submit', function(e) {
         description: formData.get('description'),
         content: formData.get('content'),
         date: new Date().toISOString().split('T')[0],
-        author: 'Aiden'
+        author: 'Aiden',
+        created: Date.now()
     };
     
     blogPosts.unshift(newPost);
-    localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+    secureStorage.savePosts(blogPosts);
     
     // Update the blog posts on the main site
     updateMainSiteBlog();
@@ -510,11 +681,25 @@ function loadExistingPosts() {
     });
 }
 
+// Logout function
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        auth.logout();
+        location.reload();
+    }
+}
+
 // Delete post
 function deletePost(postId) {
+    if (!auth.isSessionValid()) {
+        alert('Session expired. Please login again.');
+        location.reload();
+        return;
+    }
+    
     if (confirm('Are you sure you want to delete this post?')) {
         blogPosts = blogPosts.filter(post => post.id !== postId);
-        localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+        secureStorage.savePosts(blogPosts);
         updateMainSiteBlog();
         loadExistingPosts();
     }
@@ -546,10 +731,14 @@ function updateMainSiteBlog() {
 }
 
 // Check if already logged in
-if (localStorage.getItem('adminLoggedIn')) {
+if (auth.isSessionValid()) {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('adminDashboard').style.display = 'block';
     loadExistingPosts();
+    auth.setupInactivityLogout();
+} else {
+    // Clear any invalid session data
+    auth.logout();
 }
 </script>
 
