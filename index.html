@@ -804,6 +804,49 @@
             align-items: center;
         }
     }
+    
+    /* Admin button */
+    .admin-button {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        color: #495057;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+        opacity: 0.7;
+    }
+    
+    .admin-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
+        opacity: 1;
+    }
+    
+    @media (max-width: 768px) {
+        .admin-button {
+            bottom: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+    }
 </style>
 </head>
 <body>
@@ -818,7 +861,6 @@
         <a href="#about-section">About</a>
         <a href="#portfolio-section">Portfolio</a>
         <a href="contact.html">Contact</a>
-        <a href="admin.html">Admin</a>
     </nav>
 </div>
 
@@ -1114,6 +1156,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
+<!-- Admin Button -->
+<a href="admin.html" class="admin-button">Admin</a>
 
 </body>
 </html>
