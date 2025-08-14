@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Blog Management</title>
+<meta name="description" content="Private admin panel for managing blog posts">
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+            linear-gradient(135deg, #f8f9fa 0%, #e9ecef 25%, #dee2e6 50%, #ced4da 75%, #adb5bd 100%);
+        background-attachment: fixed;
+        color: #495057;
+        line-height: 1.7;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+    }
+    
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    /* Zen-inspired scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f3f4;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #adb5bd;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #868e96;
+    }
+
+    /* Navigation */
+    .nav-container {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        z-index: 1000;
+    }
+    
+    .nav-menu {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-radius: 50px;
+        padding: 0.75rem;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        gap: 0.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .nav-menu a {
+        color: #6c757d;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .nav-menu a:hover {
+        background: rgba(255, 255, 255, 0.3);
+        color: #495057;
+        transform: scale(1.05);
+    }
+    
+    .nav-menu a.active {
+        background: rgba(255, 255, 255, 0.4);
+        color: #343a40;
+    }
+
+    /* Main Content */
+    .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 6rem 2rem 4rem;
+    }
+
+    /* Login Form */
+    .login-container {
+        max-width: 400px;
+        margin: 10rem auto;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .login-container h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #343a40;
+        font-weight: 300;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #495057;
+        font-weight: 500;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid rgba(173, 181, 189, 0.3);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        color: #495057;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #adb5bd;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 0 0 3px rgba(173, 181, 189, 0.1);
+    }
+
+    .btn {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        color: #495057;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Admin Dashboard */
+    .admin-dashboard {
+        display: none;
+    }
+
+    .admin-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .admin-header h1 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: #343a40;
+        margin-bottom: 1rem;
+    }
+
+    .admin-header p {
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+
+    /* Blog Post Form */
+    .blog-form {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .blog-form h2 {
+        margin-bottom: 2rem;
+        color: #343a40;
+        font-weight: 300;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid rgba(173, 181, 189, 0.3);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        color: #495057;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #adb5bd;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 0 0 3px rgba(173, 181, 189, 0.1);
+    }
+
+    /* Existing Posts */
+    .existing-posts {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .existing-posts h2 {
+        margin-bottom: 2rem;
+        color: #343a40;
+        font-weight: 300;
+    }
+
+    .post-item {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .post-item:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .post-item h3 {
+        color: #343a40;
+        margin-bottom: 0.5rem;
+    }
+
+    .post-item p {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .post-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-small {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        width: auto;
+    }
+
+    .btn-danger {
+        background: rgba(220, 53, 69, 0.2);
+        color: #dc3545;
+        border-color: rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-danger:hover {
+        background: rgba(220, 53, 69, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .content {
+            padding: 4rem 1rem 2rem;
+        }
+        
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        
+        .nav-container {
+            top: 1rem;
+            right: 1rem;
+        }
+        
+        .nav-menu {
+            padding: 0.5rem;
+        }
+        
+        .nav-menu a {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="nav-container">
+    <nav class="nav-menu" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="index.html#about-section">About</a>
+        <a href="index.html#portfolio-section">Portfolio</a>
+        <a href="contact.html">Contact</a>
+        <a href="admin.html" class="active">Admin</a>
+    </nav>
+</div>
+
+<!-- Login Form -->
+<div class="login-container" id="loginForm">
+    <h1>Admin Login</h1>
+    <form id="adminLogin">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+    </form>
+</div>
+
+<!-- Admin Dashboard -->
+<div class="admin-dashboard" id="adminDashboard">
+    <div class="content">
+        <div class="admin-header">
+            <h1>Blog Management</h1>
+            <p>Create and manage your blog posts</p>
+        </div>
+
+        <!-- New Blog Post Form -->
+        <div class="blog-form">
+            <h2>Create New Blog Post</h2>
+            <form id="blogPostForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="postTitle">Title</label>
+                        <input type="text" id="postTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postCategory">Category</label>
+                        <input type="text" id="postCategory" name="category" placeholder="e.g., Tech Tips, Design, Tutorial">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="postDescription">Description</label>
+                    <input type="text" id="postDescription" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">Content</label>
+                    <textarea id="postContent" name="content" required placeholder="Write your blog post content here..."></textarea>
+                </div>
+                <button type="submit" class="btn">Publish Post</button>
+            </form>
+        </div>
+
+        <!-- Existing Posts -->
+        <div class="existing-posts">
+            <h2>Existing Posts</h2>
+            <div id="postsList">
+                <!-- Posts will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Simple authentication (you should implement proper authentication in production)
+const ADMIN_CREDENTIALS = {
+    username: 'admin',
+    password: 'aidenscoolwebsite2025'
+};
+
+// Blog posts storage (in production, use a database)
+let blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+
+// Login functionality
+document.getElementById('adminLogin').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        loadExistingPosts();
+    } else {
+        alert('Invalid credentials. Please try again.');
+    }
+});
+
+// Blog post form submission
+document.getElementById('blogPostForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const newPost = {
+        id: Date.now(),
+        title: formData.get('title'),
+        category: formData.get('category') || 'General',
+        description: formData.get('description'),
+        content: formData.get('content'),
+        date: new Date().toISOString().split('T')[0],
+        author: 'Aiden'
+    };
+    
+    blogPosts.unshift(newPost);
+    localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+    
+    // Update the blog posts on the main site
+    updateMainSiteBlog();
+    
+    // Reset form and reload posts
+    e.target.reset();
+    loadExistingPosts();
+    
+    alert('Blog post published successfully!');
+});
+
+// Load existing posts
+function loadExistingPosts() {
+    const postsList = document.getElementById('postsList');
+    postsList.innerHTML = '';
+    
+    if (blogPosts.length === 0) {
+        postsList.innerHTML = '<p style="color: #6c757d; text-align: center;">No posts yet. Create your first blog post!</p>';
+        return;
+    }
+    
+    blogPosts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.className = 'post-item';
+        postElement.innerHTML = `
+            <h3>${post.title}</h3>
+            <p><strong>Category:</strong> ${post.category} | <strong>Date:</strong> ${post.date}</p>
+            <p>${post.description}</p>
+            <div class="post-actions">
+                <button class="btn btn-small" onclick="editPost(${post.id})">Edit</button>
+                <button class="btn btn-small btn-danger" onclick="deletePost(${post.id})">Delete</button>
+            </div>
+        `;
+        postsList.appendChild(postElement);
+    });
+}
+
+// Delete post
+function deletePost(postId) {
+    if (confirm('Are you sure you want to delete this post?')) {
+        blogPosts = blogPosts.filter(post => post.id !== postId);
+        localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+        updateMainSiteBlog();
+        loadExistingPosts();
+    }
+}
+
+// Edit post (basic implementation)
+function editPost(postId) {
+    const post = blogPosts.find(p => p.id === postId);
+    if (post) {
+        document.getElementById('postTitle').value = post.title;
+        document.getElementById('postCategory').value = post.category;
+        document.getElementById('postDescription').value = post.description;
+        document.getElementById('postContent').value = post.content;
+        
+        // Remove the old post and update
+        blogPosts = blogPosts.filter(p => p.id !== postId);
+        localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+        
+        // Scroll to form
+        document.querySelector('.blog-form').scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Update main site blog (this would need to be implemented on the main site)
+function updateMainSiteBlog() {
+    // In a real implementation, this would update the main site's blog
+    // For now, we'll just store the data in localStorage
+    console.log('Blog posts updated:', blogPosts);
+}
+
+// Check if already logged in
+if (localStorage.getItem('adminLoggedIn')) {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('adminDashboard').style.display = 'block';
+    loadExistingPosts();
+}
+</script>
+
+</body>
+</html>
