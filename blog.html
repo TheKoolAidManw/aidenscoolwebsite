@@ -590,15 +590,25 @@
         
         .nav-menu {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 0.5rem);
             right: 0;
-            margin-top: 0.5rem;
             flex-direction: column;
-            min-width: 200px;
+            min-width: 220px;
+            max-width: 280px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s ease;
+            padding: 1rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
         }
         
         .nav-menu.active {
@@ -608,9 +618,16 @@
         }
         
         .nav-menu a {
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
             border-radius: 12px;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .nav-menu a:last-child {
+            margin-bottom: 0;
         }
         
         .blog-grid {
