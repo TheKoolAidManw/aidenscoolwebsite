@@ -148,6 +148,19 @@
         background: rgba(255, 255, 255, 0.3);
     }
     
+    /* Hamburger animation when menu is open */
+    .nav-container.active .nav-toggle span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .nav-container.active .nav-toggle span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-container.active .nav-toggle span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
     .nav-menu {
         background: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(25px);
@@ -802,16 +815,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize collapsible navbar
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
+    const navContainer = document.querySelector('.nav-container');
     
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
+            navContainer.classList.toggle('active');
         });
         
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                 navMenu.classList.remove('active');
+                navContainer.classList.remove('active');
             }
         });
     }
