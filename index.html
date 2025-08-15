@@ -7,6 +7,7 @@
 <meta name="description" content="Professional computer repair, creative design, and video editing services by Aiden. Expert Adobe Creative Suite, DaVinci Resolve, and hardware solutions.">
 <meta name="keywords" content="computer repair, video editing, graphic design, Adobe Premiere, Photoshop, Illustrator, DaVinci Resolve">
 <meta name="author" content="Aiden">
+<meta name="google-adsense-account" content="ca-pub-3169064103968069">
 <meta property="og:title" content="Aiden's Cool Website - Computer Repair & Creative Design">
 <meta property="og:description" content="Professional computer repair, creative design, and video editing services">
 <meta property="og:image" content="https://aidenscoolwebsite.com/images/logo.png">
@@ -795,6 +796,17 @@
 
     /* Responsive design */
     @media (max-width: 768px) {
+        .page-container {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding: 0 0.5rem;
+        }
+        
+        .ad-space-left,
+        .ad-space-right {
+            display: none;
+        }
+        
         .hero h1 {
             font-size: 2.5rem;
         }
@@ -885,6 +897,50 @@
         }
     }
     
+    /* Ad space layout */
+    .page-container {
+        display: grid;
+        grid-template-columns: 300px 1fr 300px;
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .ad-space-left,
+    .ad-space-right {
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1rem;
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 0.9rem;
+        text-align: center;
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .ad-space-left::before,
+    .ad-space-right::before {
+        content: 'Ad Space';
+        font-weight: 500;
+        color: #adb5bd;
+    }
+    
+    .main-content {
+        width: 100%;
+    }
+    
     /* Admin button */
     .admin-button {
         position: fixed;
@@ -967,8 +1023,10 @@
 
 <!-- Main Content -->
 <main id="main-content">
-    <div class="content">
-        <section id="about-section" class="section">
+    <div class="page-container">
+        <div class="ad-space-left"></div>
+        <div class="main-content">
+            <section id="about-section" class="section">
             <h2>About Me</h2>
             <p>I blend technical expertise with artistic vision, creating seamless solutions that bridge the gap between hardware and creativity. From intricate computer repairs to stunning visual designs, I approach every project with precision and passion.</p>
         </section>
@@ -1045,6 +1103,8 @@
                 <a href="blog.html" class="btn-secondary">Read Blog</a>
             </div>
         </div>
+        </div>
+        <div class="ad-space-right"></div>
     </div>
 </main>
 

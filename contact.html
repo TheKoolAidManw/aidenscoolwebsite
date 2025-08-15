@@ -6,8 +6,9 @@
 <title>Contact - Aiden's Cool Website</title>
 <meta name="description" content="Get in touch for professional computer repair, creative design, and video editing services. Fast response times and quality work guaranteed.">
 <meta name="keywords" content="contact, computer repair, video editing, graphic design, quote">
-<meta name="author" content="Aiden">
-<meta property="og:title" content="Contact - Aiden's Cool Website">
+    <meta name="author" content="Aiden">
+    <meta name="google-adsense-account" content="ca-pub-3169064103968069">
+    <meta property="og:title" content="Contact - Aiden's Cool Website">
 <meta property="og:description" content="Get in touch for professional computer repair and creative design services">
 <meta property="og:image" content="https://aidenscoolwebsite.com/images/logo.png">
 <meta property="og:url" content="https://aidenscoolwebsite.com/contact.html">
@@ -420,6 +421,50 @@
         background: linear-gradient(135deg, #495057, #343a40);
     }
 
+    /* Ad space layout */
+    .page-container {
+        display: grid;
+        grid-template-columns: 300px 1fr 300px;
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .ad-space-left,
+    .ad-space-right {
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        padding: 1rem;
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 0.9rem;
+        text-align: center;
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .ad-space-left::before,
+    .ad-space-right::before {
+        content: 'Ad Space';
+        font-weight: 500;
+        color: #adb5bd;
+    }
+    
+    .main-content {
+        width: 100%;
+    }
+    
     /* Footer */
     footer {
         text-align: center;
@@ -437,6 +482,17 @@
 
     /* Responsive design */
     @media (max-width: 768px) {
+        .page-container {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding: 0 0.5rem;
+        }
+        
+        .ad-space-left,
+        .ad-space-right {
+            display: none;
+        }
+        
         .hero h1 {
             font-size: 2.5rem;
         }
@@ -541,8 +597,10 @@
 </section>
 
 <!-- Content Sections -->
-<div class="content">
-    <section class="section">
+<div class="page-container">
+    <div class="ad-space-left"></div>
+    <div class="main-content">
+        <section class="section">
         <h2>Get In Touch</h2>
         <p>Whether you need computer repairs, creative design work, or video editing services, I'm here to help. Let's discuss your project and create something amazing together.</p>
         
@@ -578,7 +636,9 @@
             </form>
         </div>
     </section>
-</div>
+        </div>
+        <div class="ad-space-right"></div>
+    </div>
 
 <footer>
     <p>© 2025 Aiden's Cool Website • Crafted with precision</p>
