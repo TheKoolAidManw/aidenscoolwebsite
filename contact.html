@@ -17,6 +17,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3169064103968069"
+     crossorigin="anonymous"></script>
 <style>
     * {
         margin: 0;
@@ -454,11 +458,11 @@
             inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     
-    .ad-space-left::before,
-    .ad-space-right::before {
-        content: 'Ad Space';
-        font-weight: 500;
-        color: #adb5bd;
+    .ad-space-left,
+    .ad-space-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .main-content {
@@ -598,7 +602,18 @@
 
 <!-- Content Sections -->
 <div class="page-container">
-    <div class="ad-space-left"></div>
+            <div class="ad-space-left">
+            <!-- AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3169064103968069"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     <div class="main-content">
         <section class="section">
         <h2>Get In Touch</h2>
@@ -637,7 +652,18 @@
         </div>
     </section>
         </div>
-        <div class="ad-space-right"></div>
+        <div class="ad-space-right">
+            <!-- AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3169064103968069"
+                 data-ad-slot="0987654321"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
 <footer>
